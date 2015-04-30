@@ -1,5 +1,9 @@
 function [w,b]=train_lg_newton_raphson_multiclass(X,Y,param)
 
+
+
+error('MULTICLASS NOT IMPLEMENTED YET!')
+
 %-----default parameters-----
 maxit=500;
 lambda=0;
