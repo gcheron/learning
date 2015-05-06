@@ -1,4 +1,4 @@
-function SVM_problem=LP_primal_SVM_problem(x,y,n,m)
+function SVM_problem=LP_primal_SVM_barrier_problem(x,y,n,m)
 % Bias should be integrated into x: x = [x; ones(1,m)];
 assert(sum(x(end,:)~=1) == 0)
 

@@ -59,7 +59,7 @@ w0 = [zeros(n,1);ones(m,1) * 2];w_our_init=w0;
 c = 0.1 ;
 a0 = c/2*ones(m,1);
 
-problem=LP_primal_SVM_problem(x,y,n,m);
+problem=LP_primal_SVM_barrier_problem(x,y,n,m);
 %problem_dual=LP_dual_SVM_problem(x,y);
 
 [w_star,f_star] = LP_barrier_solver(problem,c,w0);

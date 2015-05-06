@@ -1,4 +1,8 @@
 function SVM_dual_problem=LP_dual_SVM_problem(x,y)
+
+
+error('This file has to be checked')
+
 K=x'*x;
 g = zeros(size(K,1),1);
 H = zeros(size(K));

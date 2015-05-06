@@ -1,4 +1,4 @@
-function x_star= damped_newton_method(problem,c,x0)
+function x_star= LP_damped_newton_method(problem,c,x0)
 % minimize the unconstrained problem
 % using damped Newton method with newton step computed by second order
 % approximation because there is no constraint in the minimization problem
@@ -47,7 +47,7 @@ for it = 1:max_it
 end
 
 if it == max_it
-    error ('Maximum number of iterations has been reached');
+    warning ('Maximum number of iterations has been reached');
 end
 
 % optimal value
