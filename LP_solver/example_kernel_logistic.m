@@ -11,6 +11,8 @@ X3 = bsxfun(@plus,X3,[1 2]);
 X4 = bsxfun(@times,randn(200,2),[2.5 3.5]);
 X4 = bsxfun(@plus,X4,[1 10]);
 
+close all
+
 scatter(X3(:,1),X3(:,2),'bx')
 hold on
 scatter(X4(:,1),X4(:,2),'rx')
@@ -63,24 +65,13 @@ alpha_pb2_nr= LP_newton_raphson(PB2,c,alpha0);
 train_time_dual_lin_nr = toc;
 
 Kgrid=xGrid*xTrain';
-sumProduct_grid = zeros(size(xGrid,1),1);
-for i=1:size(xGrid,1)
-    sumProduct_grid(i) =  Kgrid(i,:) * alpha_pb2 ;
-end
 Ktest_lin=xTest*xTrain';
-sumProduct_lin = zeros(size(xTest,1),1);
-for i=1:size(xTest,1)
-    sumProduct_lin(i) =  Ktest_lin(i,:) * alpha_pb2 ;
-end
 
-sumProduct_grid_nr = zeros(size(xGrid,1),1);
-for i=1:size(xGrid,1)
-    sumProduct_grid_nr(i) =  Kgrid(i,:) * alpha_pb2_nr ;
-end
-sumProduct_lin_nr = zeros(size(xTest,1),1);
-for i=1:size(xTest,1)
-    sumProduct_lin_nr(i) =  Ktest_lin(i,:) * alpha_pb2_nr ;
-end
+sumProduct_grid =  Kgrid * alpha_pb2 ;
+sumProduct_lin =  Ktest_lin * alpha_pb2 ;
+
+sumProduct_grid_nr =  Kgrid * alpha_pb2_nr ;
+sumProduct_lin_nr =  Ktest_lin * alpha_pb2_nr ;
 
 
 val = flogistic(sumProduct_grid) ; val = reshape(val,length(fieldsize),length(fieldsize)) ;
@@ -120,23 +111,11 @@ for i=1:size(xTest,1)
     Ktest_rbf(i,:) = exp(-sigma*(sum(bsxfun(@minus,xTrain,u).^2,2))) ;
 end
 
+sumProduct_grid =  Kgrid * alpha_pb3 ;
+sumProduct_rbf =  Ktest_rbf * alpha_pb3 ;
 
-sumProduct_grid = zeros(size(xGrid,1),1);
-for i=1:size(xGrid,1)
-    sumProduct_grid(i) =  Kgrid(i,:) * alpha_pb3 ;
-end
-sumProduct_rbf = zeros(size(xTest,1),1);
-for i=1:size(xTest,1)
-    sumProduct_rbf(i) =  Ktest_rbf(i,:) * alpha_pb3 ;
-end
-sumProduct_grid_nr = zeros(size(xGrid,1),1);
-for i=1:size(xGrid,1)
-    sumProduct_grid_nr(i) =  Kgrid(i,:) * alpha_pb3_nr ;
-end
-sumProduct_rbf_nr = zeros(size(xTest,1),1);
-for i=1:size(xTest,1)
-    sumProduct_rbf_nr(i) =  Ktest_rbf(i,:) * alpha_pb3_nr ;
-end
+sumProduct_grid_nr =  Kgrid * alpha_pb3_nr ;
+sumProduct_rbf_nr =  Ktest_rbf * alpha_pb3_nr ;
 
 
 val = flogistic(sumProduct_grid) ; val = reshape(val,length(fieldsize),length(fieldsize)) ;

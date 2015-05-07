@@ -1,4 +1,6 @@
 function problem=LP_dual_logistic_reg_problem(K,y)
+% The kernek K has to be computed with augmented features [X 1] to add a bias term 
+
 y(y~=1)=-1 ;
 flogistic=@(x)(1./(1+exp(-x)));
 
