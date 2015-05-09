@@ -32,7 +32,6 @@ max_metric= output_info.max_metric ;
 disp(['COST=' num2str(cost)]) ;
 disp(['MAX_metric=' num2str(max_metric)]) ;
 disp(output_info.cost_position);
-disp(output_info.beta_position);
 
 % train on the whole dataset with selected parameters
 hyperparams.cost = cost ;

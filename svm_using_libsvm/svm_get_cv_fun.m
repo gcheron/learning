@@ -9,7 +9,7 @@ if isfield(hyperparams,'wp')
 else
     parameter_string = sprintf('-s 0 -t 4 -c %.9f -q',hyperparams.cost);
 end
-model = svmtrain(labels,[(1:size(kernel,1))' kernel], parameter_string);
+model = svmtrain_libsvm(labels,[(1:size(kernel,1))' kernel], parameter_string);
 
 function conf = get_testfun(model,kernel)
 labels=zeros(size(kernel,1),1);

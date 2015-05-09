@@ -28,7 +28,7 @@ K_lin = X*X' ;
 Kgrid=xGrid*X';
 
 % without CV
-svm = svmtrain(Y,[(1:size(K_lin,1))' K_lin], '-s 0 -t 4 -c 100 -w1 1 -w-1 1 -q');
+svm = svmtrain_libsvm(Y,[(1:size(K_lin,1))' K_lin], '-s 0 -t 4 -c 100 -w1 1 -w-1 1 -q');
 val=test_svm_kernel(Kgrid,svm);
 val = reshape(val,length(fieldsize),length(fieldsize)) ;
 contour(xx,yy,val,[0.5 0.5],'b');
@@ -53,7 +53,7 @@ for i=1:size(xGrid,1)
     Kgrid(i,:) = exp(-sigma*(sum(bsxfun(@minus,X,u).^2,2))) ;
 end
 % without CV
-svm = svmtrain(Y,[(1:size(K_rbf,1))' K_rbf], '-s 0 -t 4 -c 100 -w1 1 -w-1 1 -q');
+svm = svmtrain_libsvm(Y,[(1:size(K_rbf,1))' K_rbf], '-s 0 -t 4 -c 100 -w1 1 -w-1 1 -q');
 val=test_svm_kernel(Kgrid,svm);
 val = reshape(val,length(fieldsize),length(fieldsize)) ;
 contour(xx,yy,val,[0.5 0.5],'r' );

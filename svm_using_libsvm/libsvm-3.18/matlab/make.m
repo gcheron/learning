@@ -6,14 +6,14 @@ try
 	if(strcmp(Type(1).Name, 'Octave') == 1)
 		mex libsvmread.c
 		mex libsvmwrite.c
-		mex svmtrain.c ../svm.cpp svm_model_matlab.c
+		mex svmtrain_libsvm.c ../svm.cpp svm_model_matlab.c
 		mex svmpredict.c ../svm.cpp svm_model_matlab.c
 	% This part is for MATLAB
 	% Add -largeArrayDims on 64-bit machines of MATLAB
 	else
 		mex CFLAGS="\$CFLAGS -std=c99" -largeArrayDims libsvmread.c
 		mex CFLAGS="\$CFLAGS -std=c99" -largeArrayDims libsvmwrite.c
-		mex CFLAGS="\$CFLAGS -std=c99" -largeArrayDims svmtrain.c ../svm.cpp svm_model_matlab.c
+		mex CFLAGS="\$CFLAGS -std=c99" -largeArrayDims svmtrain_libsvm.c ../svm.cpp svm_model_matlab.c
 		mex CFLAGS="\$CFLAGS -std=c99" -largeArrayDims svmpredict.c ../svm.cpp svm_model_matlab.c
 	end
 catch

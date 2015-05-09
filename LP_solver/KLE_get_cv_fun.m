@@ -1,16 +1,27 @@
-function fun=KLE_get_cv_fun()
-% 
-% fun.train = @(kernel,labels,hyperparams)(get_trainfun(kernel,labels,hyperparams)) ;
-% fun.test = @(model,kernel)(get_testfun(model,kernel));
-% 
-% function model = get_trainfun(kernel,labels,hyperparams)
-% if isfield(hyperparams,'wp')
-%     parameter_string = sprintf('-s 0 -t 4 -c %.9f -w1 %.9f -w-1 %.9f -q',hyperparams.cost,hyperparams.wp,hyperparams.wn);
-% else
-%     parameter_string = sprintf('-s 0 -t 4 -c %.9f -q',hyperparams.cost);
-% end
-% model = svmtrain(labels,[(1:size(kernel,1))' kernel], parameter_string);
-% 
-% function conf = get_testfun(model,kernel)
-% labels=zeros(size(kernel,1),1);
-% [~, ~, conf]  = svmpredict(labels,[(1:size(kernel,1))' kernel],model,'-q');
+function fun=KLE_get_cv_fun(param)
+
+ep = 1e-4 ; % tolerance
+max_it = 100 ; % maximum number of iterations
+if nargin > 1
+    if isfield(param,'ep')
+        ep = param.ep;
+    end
+    if isfield(param,'max_it')
+        max_it = param.max_it ;
+    end
+end
+
+flogistic=@(x)(1./(1+exp(-x)));
+KLE_problem=@(kernel,labels)(LP_dual_logistic_reg_problem(kernel,labels));
+
+fun.train = @(kernel,labels,hyperparams)(get_trainfun(kernel,labels,hyperparams,KLE_problem,ep,max_it)) ;
+fun.test = @(model,kernel)(get_testfun(model,kernel,flogistic));
+
+function model = get_trainfun(kernel,labels,hyperparams,KLE_problem,ep,max_it)
+pb=KLE_problem(kernel,labels);
+param.ep = ep ;
+param.max_it = max_it ;
+model.alpha = LP_newton_raphson(pb,1/hyperparams.cost,zeros(size(kernel,1),1),param);
+ 
+function conf = get_testfun(model,kernel,flogistic)
+conf=flogistic(kernel * model.alpha);
