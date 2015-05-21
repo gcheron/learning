@@ -2,7 +2,7 @@ function fun=KLE_get_cv_fun(param)
 
 ep = 1e-4 ; % tolerance
 max_it = 100 ; % maximum number of iterations
-if nargin > 1
+if nargin > 0
     if isfield(param,'ep')
         ep = param.ep;
     end

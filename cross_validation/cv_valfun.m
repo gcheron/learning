@@ -25,10 +25,8 @@ end
 switch cross_parameters.cross_metric
     case 'AP'
         cross_metric=1 ;
-    case 'MeanRecalls'
-        cross_metric=2 ;
     case 'Accuracy'
-        cross_metric=3 ;    
+        cross_metric=2 ;    
     otherwise
         error('Unknown cross-validation metric');
 end
@@ -78,11 +76,7 @@ for k=1:K
     if cross_metric == 1
         [~, ~, info] = vl_pr(vlset_labels, conf);
         metric_value = info.auc; 
-    elseif cross_metric == 2
-        TP = sum(conf(vlset_labels==1)>=0) ;
-        TN = sum(conf(vlset_labels~=1)<0) ;
-        metric_value = 0.5*(TP/validposnum + TN/validnegnum);  % recall for positive and negative classes
-    elseif cross_metric == 3 % Accuracy
+    elseif cross_metric == 2 % Accuracy
         metric_value = fun.accuracy(conf,vlset_labels);
     end
     metric_value_tab(k)=metric_value;
