@@ -1,5 +1,4 @@
 % example on JHMDB split 1 with HLPF (L2)
-
 nbclasses=21;
 featdirraw=[learningtoolboxroot '/train_test/data_example/HLPF_JHMDB_train1'];
 
@@ -43,7 +42,7 @@ svm=cell(nbclasses,1);
 output_infolist=cell(nbclasses,1);
 scoressvm = zeros(size(yTest));
 parfor c=1:nbclasses
-    [svm{c},output_infolist{c}]=cv_main_c_beta(Ktrain,yTrain(:,c),fun,'beta_range', 2.^(-8:1:8), 'cost_range',logspace(-3,2.5,10),'cross_metric','Accuracy');
+    [svm{c},output_infolist{c}]=cv_main_c_beta(Ktrain,yTrain(:,c),fun,'beta_range', 2.^(-8:1:8), 'cost_range',logspace(-3,2.5,10),'cross_metric','AP');
     scoressvm(:,c)=test_svm_kernel(Ktest,svm{c});
 end
 
@@ -76,7 +75,7 @@ KLE=cell(nbclasses,1);
 output_infolist=cell(nbclasses,1);
 scores = zeros(size(yTest));
 parfor c=1:nbclasses
-    [KLE{c},output_infolist{c}]=cv_main_c(Ktrain,yTrain(:,c),fun,'cost_range',logspace(-1,10,25),'cross_metric','Accuracy');
+    [KLE{c},output_infolist{c}]=cv_main_c(Ktrain,yTrain(:,c),fun,'cost_range',logspace(-1,10,25),'cross_metric','AP');
     scores(:,c)=KLE_test(KLE{c}.alpha,Ktest);
 end
 
@@ -111,7 +110,7 @@ svm=cell(nbclasses,1);
 output_infolist=cell(nbclasses,1);
 scoressvm = zeros(size(yTest));
 parfor c=1:nbclasses
-    [svm{c},output_infolist{c}]=cv_main_overfittest_c_beta(Ktrain,yTrain(:,c),Ktest,yTest(:,c),fun,'beta_range', 2.^(-8:1:8), 'cost_range',logspace(-3,2.5,10),'cross_metric','Accuracy','display_evolution',0);
+    [svm{c},output_infolist{c}]=cv_main_overfittest_c_beta(Ktrain,yTrain(:,c),Ktest,yTest(:,c),fun,'beta_range', 2.^(-8:1:8), 'cost_range',logspace(-3,2.5,10),'cross_metric','AP','display_evolution',0);
     scoressvm(:,c)=test_svm_kernel(Ktest,svm{c});
 end
 

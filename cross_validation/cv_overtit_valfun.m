@@ -40,6 +40,6 @@ elseif cross_metric == 2
     TN = sum(conf(ytest~=1)<0) ;
     metric_value = 0.5*(TP/validposnum + TN/validnegnum);  % recall for positive and negative classes
 elseif cross_metric == 3 % Accuracy
-    metric_value = (sum(conf(ytest==1)>=0) + sum(conf(ytest~=1)<0))/(validposnum+validnegnum) ;
+    metric_value = fun.accuracy(conf,vlset_labels);
 end
 
