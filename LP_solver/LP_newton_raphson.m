@@ -22,7 +22,10 @@ Hf=@(x)(problem.H(x,c)); % hessian
 
 % init
 x=x0;
+lambda_2=Inf ;
 for it = 1:max_it
+    lambda_2_prev=lambda_2;
+    
     g=gf(x);
     H=Hf(x);
     
@@ -31,7 +34,7 @@ for it = 1:max_it
     
     lambda_2 = g'*-delta; % newton decrement
     
-    if lambda_2 / 2 <= ep % stop criterion
+    if lambda_2 / 2 <= ep || lambda_2 > lambda_2_prev || isnan(lambda_2) % stop criterion
         break ;
     end
     
